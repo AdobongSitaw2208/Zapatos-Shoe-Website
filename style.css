@@ -132,6 +132,7 @@ section { scroll-margin-top: 100px; }
     padding: 100px 8%;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     background:
         linear-gradient(90deg, rgba(46, 0, 7, 0.88), rgba(150, 0, 25, 0.35)),
         url("https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1800&q=85");
@@ -139,6 +140,8 @@ section { scroll-margin-top: 100px; }
     background-position: center;
     color: #ffffff;
 }
+
+.hero-art { display: none; }
 
 .hero-content { max-width: 650px; }
 
@@ -631,8 +634,8 @@ select option { color: #171717; background-color: #ffffff; }
 
 /* Toasts, modal, back-to-top */
 .toast-container { position: fixed; top: 90px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 3000; }
-.toast { display: flex; align-items: center; gap: 10px; max-width: 320px; padding: 13px 18px; border-radius: 12px; background: #171717; color: #ffffff; font-size: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); transform: translateX(130%); transition: transform 0.3s ease; }
-.toast.show { transform: translateX(0); }
+.toast { display: flex; align-items: center; gap: 10px; max-width: 320px; padding: 13px 18px; border-radius: 12px; background: #171717; color: #ffffff; font-size: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); opacity: 0; transform: translateX(30px); transition: 0.3s; }
+.toast.show { opacity: 1; transform: translateX(0); }
 .toast.error { background: #b71c1c; }
 .toast.info { background: #37474f; }
 
@@ -642,7 +645,7 @@ select option { color: #171717; background-color: #ffffff; }
 .modal-box h3 { margin-bottom: 8px; font-size: 22px; }
 .modal-box p { margin-bottom: 22px; color: #666666; font-size: 13px; }
 
-.back-to-top { position: fixed; right: 25px; bottom: 25px; width: 46px; height: 46px; border: none; border-radius: 50%; background: #171717; color: #ffffff; opacity: 0; visibility: hidden; transform: translateY(10px); transition: 0.3s; z-index: 900; }
+.back-to-top { position: fixed; right: 25px; bottom: 25px; width: 46px; height: 46px; border: none; border-radius: 50%; background: #171717; color: #ffffff; opacity: 0; visibility: hidden; transform: translateY(12px); transition: 0.3s; z-index: 2200; }
 .back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
 
 /* Responsive layout */
