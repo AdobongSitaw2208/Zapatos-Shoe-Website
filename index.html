@@ -94,7 +94,7 @@
         </div>
     </div>
     <div class="hero-art">
-        <img src="Zopatos_jpeg.png" alt="Zopatos Shoe Store badge">
+        <img src="Zopatos.jpeg.png" alt="Zopatos Shoe Store badge">
     </div>
     <a href="#products" class="scroll-hint" aria-label="Scroll to products">
         <i class="fa-solid fa-chevron-down"></i>
@@ -676,10 +676,21 @@
 </button>
 <script>
 (function () {
+    var LOCAL_IMAGE_BASE = './';
+    var resolveImageSource = function (imageRef) {
+        if (!imageRef) {
+            return 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80';
+        }
+        if (/^https?:\/\//i.test(imageRef) || /^data:/i.test(imageRef)) {
+            return imageRef;
+        }
+        return LOCAL_IMAGE_BASE + encodeURI(String(imageRef).trim().replace(/^\.\//, ''));
+    };
+
     var PRODUCTS = [
         ["RUNNING", "Air Runner X1", "Lightweight running shoes designed for comfortable daily movement.", "6-12", "Black/Red", "Mesh", "Lightweight", 2499, "NEW", "1542291026-7eec264c27ff"],
         ["RUNNING", "Speed Runner Pro", "Responsive running shoes designed for speed and comfortable movement.", "7-12", "Blue/White", "Mesh", "Breathable", 2999, "", "1552346154-21d32810aba3"],
-        ["RUNNING", "Cloud Sprint 3", "Cushioned daily trainers with a soft landing for longer runs.", "6-12", "White/Sky Blue", "Mesh", "Soft Cushioning", 2799, "NEW", "1491553895911-0055eca6402d"],
+        ["RUNNING", "Cloud Sprint 3", "Cushioned daily trainers with a soft landing for longer runs.", "6-12", "White/Sky Blue", "Mesh", "Soft Cushioning", 2799, "NEW", "1491553895911-0055eca6402f"],
         ["RUNNING", "Velocity Trail", "Grippy trail runners built for dirt paths and wet ground.", "7-12", "Olive/Orange", "Ripstop", "Deep Traction", 3199, "", "1460353581641-37baddab0fa2"],
         ["RUNNING", "Marathon Lite", "Ultra-light shoes made to stay comfortable over long distances.", "6-12", "Gray/Lime", "Engineered Mesh", "Ultra Light", 3499, "", "1543508282-6319a3e2621f"],
         ["RUNNING", "Pacer Boost", "Energy-returning midsole for steady, confident pacing.", "6-12", "Black/Gold", "Knit", "Energy Return", 3299, "SALE", "Pacer Boost.jpeg"],
@@ -698,7 +709,7 @@
         ["BASKETBALL", "Crossover X", "Responsive traction for sharp crossovers and change of pace.", "7-12", "White/Purple", "Synthetic", "Pivot Traction", 3499, "NEW", "Crossover.jpeg"],
         ["BASKETBALL", "Alley Oop Max", "Maximum bounce cushioning for high-flying plays.", "8-13", "Black/Neon", "Synthetic", "Max Bounce", 4199, "", "Alley.jpeg"],
         ["CASUAL", "Street Classic", "A classic everyday sneaker that matches different outfits.", "6-12", "White", "Canvas", "Everyday Wear", 2199, "", "Street.jpeg"],
-        ["CASUAL", "Easy Walker", "Soft, comfy walking shoes for all-day wear.", "6-12", "Gray", "Fabric", "All-Day Comfort", 1899, "NEW", "Easy.jpeg"],
+        ["CASUAL", "Easy Walker", "Soft, comfy walking shoes for all-day wear.", "6-12", "Gray", "Fabric", "All-Day Comfort", 1899, "NEW", "easy.jpeg"],
         ["CASUAL", "Weekend Slip-On", "No-lace slip-ons that are quick to wear and easy to love.", "6-12", "Navy", "Canvas", "Slip-On", 1799, "", "Weekend Slip-On.jpg"],
         ["CASUAL", "Canvas Low", "Timeless low-top canvas sneakers in clean colors.", "6-12", "Black/White", "Canvas", "Low-Top", 1999, "", "Canvas Low.jpg"],
         ["CASUAL", "Retro Court", "Vintage-inspired court style for a relaxed look.", "6-12", "White/Green", "Synthetic Leather", "Retro Style", 2399, "SALE", "Retro Court.jpg"],
@@ -731,9 +742,7 @@
     var grid = document.getElementById('product-grid');
     var html = '';
     PRODUCTS.forEach(function (p) {
-        var src = p[9].indexOf('.') === -1
-            ? 'https://images.unsplash.com/photo-' + p[9] + '?auto=format&fit=crop&w=800&q=80'
-            : p[9];
+        var src = resolveImageSource(p[9]);
         html += '<article class="product-card">' +
             '<div class="product-image"><img src="' + src + '" alt="Zopatos ' + p[1] + '" loading="lazy">' +
             (p[8] ? '<span class="sale-tag">' + p[8] + '</span>' : '') + '</div>' +
