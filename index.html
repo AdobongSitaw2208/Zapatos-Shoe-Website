@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Zopatos - running, basketball, casual, training and lifestyle shoes. Step into your style.">
+    <meta name="theme-color" content="#1a00a8">
+    <title>ZOPATOS | Step Into Your Style</title>
+    <script>document.documentElement.classList.add('js');</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Archivo+Black&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="announcement-bar">
+    <span><i class="fa-solid fa-truck-fast"></i> Free delivery on orders of ₱5,000 or more</span>
+    <span class="announcement-sep">•</span>
+    <span><i class="fa-solid fa-tags"></i> Use code <b>SAVE30</b> for 30% off</span>
+</div>
+<header class="header" id="site-header">
+    <div class="logo">
+        <img src="Zopatos.jpeg.png" alt="Zopatos Shoe Store">
+    </div>
+    <nav class="navbar" id="navbar">
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#categories">Categories</a>
+        <a href="#promotions">Promotions</a>
+        <a href="#about">About Us</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    <div class="header-actions">
+        <form class="search-box" id="search-form" action="#products" novalidate>
+            <input type="search" id="search-input" placeholder="Search shoes...">
+            <button type="submit" aria-label="Search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
+        <a href="#login" class="login-btn" id="login-btn">Log In</a>
+        <a href="#signup" class="signup-btn" id="signup-btn">
+            <i class="fa-solid fa-user"></i>
+            Sign Up
+        </a>
+        <span class="user-greeting" id="user-greeting" hidden>
+            <i class="fa-solid fa-user"></i> Hi, <span id="user-name"></span>
+        </span>
+        <button type="button" class="logout-btn" id="logout-btn" hidden>Log Out</button>
+        <a href="#checkout" class="cart-btn" id="cart-btn" aria-label="Open cart">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="cart-count" id="cart-count" hidden>0</span>
+        </a>
+    </div>
+    <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+</header>
+<section id="home" class="hero">
+    <div class="hero-content">
+        <p class="small-title" id="hero-welcome">WELCOME TO ZOPATOS</p>
+        <h1>
+            STEP INTO<br>
+            YOUR <span> STYLE</span>
+        </h1>
+        <p class="hero-description">
+            Discover stylish, comfortable, and high-quality shoes
+            designed for every step of your journey.
+        </p>
+        <div class="hero-buttons">
+            <a href="#products" class="primary-btn">
+                Shop Now
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <a href="#categories" class="secondary-btn">
+                Explore Categories
+            </a>
+        </div>
+        <div class="hero-stats">
+            <div>
+                <strong>50+</strong>
+                <span>Shoe styles</span>
+            </div>
+            <div>
+                <strong>5</strong>
+                <span>Categories</span>
+            </div>
+            <div>
+                <strong>3</strong>
+                <span>Ways to pay</span>
+            </div>
+        </div>
+    </div>
+    <div class="hero-art">
+        <img src="Zopatos_jpeg.png" alt="Zopatos Shoe Store badge">
+    </div>
+    <a href="#products" class="scroll-hint" aria-label="Scroll to products">
+        <i class="fa-solid fa-chevron-down"></i>
+    </a>
+</section>
+<div class="ticker" aria-hidden="true">
+    <div class="ticker-track"><span>Free delivery over ₱5,000</span><span>50+ shoe styles</span><span>Cash · GCash · Card</span><span>Use code SAVE30</span><span>Step into your style</span><span>Free delivery over ₱5,000</span><span>50+ shoe styles</span><span>Cash · GCash · Card</span><span>Use code SAVE30</span><span>Step into your style</span></div>
+</div>
+<section id="login" class="login-section">
+    <div class="login-container">
+        <div class="login-icon">
+            <i class="fa-solid fa-user"></i>
+        </div>
+        <div class="section-heading">
+            <p>WELCOME BACK</p>
+            <h2>Log In to Zopatos</h2>
+            <span>
+                Sign in to access your Zopatos account.
+            </span>
+        </div>
+        <form class="login-form" id="login-form" novalidate>
+            <div class="form-group">
+                <label for="login-email">
+                    Email Address
+                </label>
+                <input
+                    type="email"
+                    id="login-email"
+                    data-rule="email"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                >
+            </div>
+            <div class="form-group">
+                <label for="login-password">
+                    Password
+                </label>
+                <input
+                    type="password"
+                    id="login-password"
+                    data-rule="loginPassword"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                >
+            </div>
+            <div class="login-options">
+                <label>
+                    <input type="checkbox" id="remember-me">
+                    Remember me
+                </label>
+                <a href="#" id="forgot-password">
+                    Forgot Password?
+                </a>
+            </div>
+            <p class="form-message" id="login-message" hidden></p>
+            <button type="submit" class="login-submit">
+                Log In
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <div class="login-divider">
+                <span>OR</span>
+            </div>
+            <p class="register-text">
+                Don't have an account?
+                <a href="#signup">Create an account</a>
+            </p>
+        </form>
+    </div>
+</section>
+<section class="features">
+    <div class="feature reveal">
+        <i class="fa-solid fa-truck"></i>
+        <div>
+            <h3>Fast Delivery</h3>
+            <p>Quick and reliable delivery.</p>
+        </div>
+    </div>
+    <div class="feature reveal">
+        <i class="fa-solid fa-shield-halved"></i>
+        <div>
+            <h3>Secure Payment</h3>
+            <p>Cash, GCash or card.</p>
+        </div>
+    </div>
+    <div class="feature reveal">
+        <i class="fa-solid fa-rotate-left"></i>
+        <div>
+            <h3>Easy Returns</h3>
+            <p>Simple return process.</p>
+        </div>
+    </div>
+    <div class="feature reveal">
+        <i class="fa-solid fa-headset"></i>
+        <div>
+            <h3>Customer Support</h3>
+            <p>We're here to help.</p>
+        </div>
+    </div>
+</section>
+<section id="products" class="section">
+    <div class="section-heading reveal">
+        <p>OUR COLLECTION</p>
+        <h2>Featured Shoes</h2>
+        <span>
+            Find the perfect pair for your style and activity.
+        </span>
+    </div>
+    <div class="product-toolbar">
+        <div class="filter-buttons" id="filter-buttons">
+            <button type="button" class="filter-btn active" data-filter="ALL">All</button>
+            <button type="button" class="filter-btn" data-filter="RUNNING">Running</button>
+            <button type="button" class="filter-btn" data-filter="BASKETBALL">Basketball</button>
+            <button type="button" class="filter-btn" data-filter="CASUAL">Casual</button>
+            <button type="button" class="filter-btn" data-filter="TRAINING">Training</button>
+            <button type="button" class="filter-btn" data-filter="LIFESTYLE">Lifestyle</button>
+        </div>
+        <div class="sort-box">
+            <label for="sort-select">Sort by</label>
+            <select id="sort-select">
+                <option value="default">Featured</option>
+                <option value="low">Price: Low to High</option>
+                <option value="high">Price: High to Low</option>
+                <option value="name">Name: A to Z</option>
+            </select>
+        </div>
+    </div>
+    <p class="results-count" id="results-count"></p>
+    <div class="product-grid" id="product-grid">
+    </div>
+    <p class="no-results" id="no-results" hidden>
+        No shoes match your search.
+        <button type="button" class="link-btn" id="reset-filters">Reset filters</button>
+    </p>
+</section>
+<section id="categories" class="section categories-section">
+    <div class="section-heading reveal">
+        <p>SHOP BY TYPE</p>
+        <h2>Categories</h2>
+        <span>
+            Choose the perfect shoes for your activity.
+        </span>
+    </div>
+    <div class="category-grid">
+        <a href="#products" class="category-card reveal">
+            <i class="fa-solid fa-person-running"></i>
+            <h3>Running</h3>
+            <p>For everyday runs and active movement.</p>
+            <small class="category-count">10 styles</small>
+        </a>
+        <a href="#products" class="category-card reveal">
+            <i class="fa-solid fa-basketball"></i>
+            <h3>Basketball</h3>
+            <p>Built for court performance.</p>
+            <small class="category-count">10 styles</small>
+        </a>
+        <a href="#products" class="category-card reveal">
+            <i class="fa-solid fa-shirt"></i>
+            <h3>Casual</h3>
+            <p>Perfect for everyday outfits.</p>
+            <small class="category-count">10 styles</small>
+        </a>
+        <a href="#products" class="category-card reveal">
+            <i class="fa-solid fa-dumbbell"></i>
+            <h3>Training</h3>
+            <p>Support for your workout sessions.</p>
+            <small class="category-count">10 styles</small>
+        </a>
+        <a href="#products" class="category-card reveal">
+            <i class="fa-solid fa-star"></i>
+            <h3>Lifestyle</h3>
+            <p>Modern shoes for your daily style.</p>
+            <small class="category-count">10 styles</small>
+        </a>
+    </div>
+</section>
+<section id="promotions" class="promotion">
+    <div class="promotion-content">
+        <p>LIMITED TIME OFFER</p>
+        <h2>SAVE UP TO <span>30%</span></h2>
+        <h3>ON SELECTED SHOES</h3>
+        <p>
+            Upgrade your shoe collection with selected
+            Zopatos products at special prices.
+            Use promo code <b>ZOPATOS10</b>, <b>STEP20</b>, or <b>SAVE30</b> in your cart.
+        </p>
+        <div class="promo-chips">
+            <span>ZOPATOS10 · 10% off</span>
+            <span>STEP20 · 20% off</span>
+            <span>SAVE30 · 30% off</span>
+        </div>
+        <a href="#products" class="promotion-btn">
+            Shop the Sale
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
+    </div>
+</section>
+<section id="about" class="section about-section">
+    <div class="about-image reveal">
+        <img src="https://images.unsplash.com/photo-1554130842-8e3f5f3c8e88?auto=format&fit=crop&w=1000&q=80"
+             alt="Zopatos shoes">
+    </div>
+    <div class="about-content reveal">
+        <p class="section-label">ABOUT ZOPATOS</p>
+        <h2>Step Forward With Confidence.</h2>
+        <p>
+            Zopatos is a modern shoe brand created for people
+            who want comfort, style, and quality in every step.
+        </p>
+        <p>
+            Our collection includes running, basketball, casual,
+            training, and lifestyle shoes suitable for different
+            activities and everyday use.
+        </p>
+        <div class="about-list">
+            <div>
+                <i class="fa-solid fa-check"></i>
+                <span>Comfortable designs</span>
+            </div>
+            <div>
+                <i class="fa-solid fa-check"></i>
+                <span>Modern styles</span>
+            </div>
+            <div>
+                <i class="fa-solid fa-check"></i>
+                <span>Quality materials</span>
+            </div>
+            <div>
+                <i class="fa-solid fa-check"></i>
+                <span>Affordable prices</span>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="reviews" class="section reviews-section">
+    <div class="section-heading reveal">
+        <p>HAPPY CUSTOMERS</p>
+        <h2>What Our Customers Say</h2>
+        <span>
+            Real comfort, real style, real feedback.
+        </span>
+    </div>
+    <div class="review-grid">
+        <article class="review-card reveal">
+            <div class="stars" aria-label="5 out of 5 stars">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p>"Super comfortable for my morning runs. The delivery was fast and the fit was perfect."</p>
+            <div class="reviewer">
+                <span class="avatar">M</span>
+                <div><strong>Marco D.</strong><small>Running shoes</small></div>
+            </div>
+        </article>
+        <article class="review-card reveal">
+            <div class="stars" aria-label="5 out of 5 stars">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p>"Great grip on the court and the ankle support is solid. Worth every peso."</p>
+            <div class="reviewer">
+                <span class="avatar">J</span>
+                <div><strong>Jerome S.</strong><small>Basketball shoes</small></div>
+            </div>
+        </article>
+        <article class="review-card reveal">
+            <div class="stars" aria-label="5 out of 5 stars">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+            </div>
+            <p>"Love the clean style. I wear my Zopatos sneakers to school and out with friends."</p>
+            <div class="reviewer">
+                <span class="avatar">A</span>
+                <div><strong>Angela R.</strong><small>Lifestyle shoes</small></div>
+            </div>
+        </article>
+    </div>
+</section>
+<section id="signup" class="signup-section">
+    <div class="form-container">
+        <div class="section-heading">
+            <p>JOIN ZOPATOS</p>
+            <h2>Create Your Account</h2>
+            <span>
+                Sign up to stay updated with new products and promotions.
+            </span>
+        </div>
+        <form class="signup-form" id="signup-form" novalidate>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="signup-first">First Name</label>
+                    <input type="text" id="signup-first" data-rule="name" placeholder="Enter your first name" autocomplete="given-name">
+                </div>
+                <div class="form-group">
+                    <label for="signup-last">Last Name</label>
+                    <input type="text" id="signup-last" data-rule="name" placeholder="Enter your last name" autocomplete="family-name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="signup-email">Email Address</label>
+                <input type="email" id="signup-email" data-rule="email" placeholder="Enter your email" autocomplete="email">
+            </div>
+            <div class="form-group">
+                <label for="signup-password">Password</label>
+                <input type="password" id="signup-password" data-rule="password" placeholder="At least 8 characters, with letters and numbers" autocomplete="new-password">
+            </div>
+            <div class="form-group">
+                <label for="signup-confirm">Confirm Password</label>
+                <input type="password" id="signup-confirm" data-rule="confirm" placeholder="Re-enter your password" autocomplete="new-password">
+            </div>
+            <p class="form-message" id="signup-message" hidden></p>
+            <button type="submit" class="primary-btn">
+                Create Account
+            </button>
+        </form>
+    </div>
+</section>
+<section id="checkout" class="section checkout-section">
+    <div class="section-heading">
+        <p>ORDER INFORMATION</p>
+        <h2>Checkout</h2>
+        <span>
+            Complete your order information below.
+        </span>
+    </div>
+    <form class="checkout-form" id="checkout-form" novalidate>
+
+        <div class="order-summary" id="order-summary"></div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="checkout-name">Full Name</label>
+                <input type="text" id="checkout-name" data-rule="name" placeholder="Your full name" autocomplete="name">
+            </div>
+            <div class="form-group">
+                <label for="checkout-phone">Phone Number</label>
+                <input type="tel" id="checkout-phone" data-rule="phone" placeholder="09XXXXXXXXX" autocomplete="tel">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="checkout-address">Delivery Address</label>
+            <textarea id="checkout-address" data-rule="address" placeholder="Enter your complete delivery address" autocomplete="street-address"></textarea>
+        </div>
+        <div class="payment-box">
+            <h3>Payment Method</h3>
+            <label class="payment-option">
+                <input type="radio" name="payment" value="Cash on Delivery">
+                <i class="fa-solid fa-money-bill-wave"></i>
+                <span class="payment-text">
+                    <strong>Cash on Delivery</strong>
+                    <small>Pay when your order arrives</small>
+                </span>
+            </label>
+            <label class="payment-option">
+                <input type="radio" name="payment" value="GCash">
+                <i class="fa-solid fa-mobile-screen-button"></i>
+                <span class="payment-text">
+                    <strong>GCash</strong>
+                    <small>Pay with your GCash wallet</small>
+                </span>
+            </label>
+            <label class="payment-option">
+                <input type="radio" name="payment" value="Credit/Debit Card">
+                <i class="fa-solid fa-credit-card"></i>
+                <span class="payment-text">
+                    <strong>Credit / Debit Card</strong>
+                    <small>Visa, Mastercard, American Express</small>
+                </span>
+                <span class="card-brands" aria-hidden="true">
+                    <i class="fa-brands fa-cc-visa"></i>
+                    <i class="fa-brands fa-cc-mastercard"></i>
+                    <i class="fa-brands fa-cc-amex"></i>
+                </span>
+            </label>
+            <small class="error-msg" id="payment-error"></small>
+            <div id="payment-cod-note" class="payment-panel" hidden>
+                <i class="fa-solid fa-circle-info"></i>
+                Pay in cash when your order arrives. Please prepare the exact amount if possible.
+            </div>
+            <!-- GCash -->
+            <div id="payment-gcash-fields" class="payment-panel" hidden>
+                <div class="form-group">
+                    <label for="gcash-number">GCash Mobile Number</label>
+                    <input type="tel" id="gcash-number" data-rule="gcash"
+                           placeholder="09171234567" autocomplete="tel">
+                </div>
+                <p class="panel-note">
+                    <i class="fa-solid fa-lock"></i>
+                    A GCash payment request will be sent to this number.
+                </p>
+            </div>
+            <div id="payment-card-fields" class="payment-panel" hidden>
+                <div class="form-group">
+                    <label for="card-name">Name on Card</label>
+                    <input type="text" id="card-name" data-rule="name"
+                           placeholder="JUAN DELA CRUZ" autocomplete="cc-name">
+                </div>
+                <div class="form-group">
+                    <label for="card-number">Card Number</label>
+                    <input type="text" id="card-number" data-rule="cardNumber"
+                           inputmode="numeric" placeholder="1234 5678 9012 3456" autocomplete="cc-number">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="card-expiry">Expiry (MM/YY)</label>
+                        <input type="text" id="card-expiry" data-rule="cardExpiry"
+                               inputmode="numeric" placeholder="12/28" autocomplete="cc-exp">
+                    </div>
+                    <div class="form-group">
+                        <label for="card-cvv">CVV</label>
+                        <input type="password" id="card-cvv" data-rule="cardCvv"
+                               inputmode="numeric" placeholder="123" autocomplete="cc-csc">
+                    </div>
+                </div>
+                <p class="panel-note">
+                    <i class="fa-solid fa-lock"></i>
+                    Your full card number and CVV are never saved.
+                </p>
+            </div>
+        </div>
+        <p class="form-message" id="checkout-message" hidden></p>
+        <button type="submit" class="checkout-btn">
+            Place Order
+        </button>
+    </form>
+</section>
+<section id="contact" class="contact-section">
+    <div class="contact-container">
+        <div class="contact-info">
+            <p class="section-label">GET IN TOUCH</p>
+            <h2>Contact Zopatos</h2>
+            <p>
+                Have a question about our products or your order?
+                Send us a message.
+            </p>
+            <div class="contact-item">
+                <i class="fa-solid fa-envelope"></i>
+                <div>
+                    <h4>Email</h4>
+                    <p>support@zopatos.com</p>
+                </div>
+            </div>
+            <div class="contact-item">
+                <i class="fa-solid fa-phone"></i>
+                <div>
+                    <h4>Phone</h4>
+                    <p>0912 345 6789</p>
+                </div>
+            </div>
+            <div class="contact-item">
+                <i class="fa-solid fa-location-dot"></i>
+                <div>
+                    <h4>Location</h4>
+                    <p>Address: 938 Aurora Blvd, Cubao, Quezon City, 1109 Metro Manila</p>
+                </div>
+            </div>
+            <div class="social-icons">
+                <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            </div>
+        </div>
+        <form class="contact-form" id="contact-form" novalidate>
+            <div class="form-group">
+                <label for="contact-name">Name</label>
+                <input type="text" id="contact-name" data-rule="name" placeholder="Your name" autocomplete="name">
+            </div>
+            <div class="form-group">
+                <label for="contact-email">Email</label>
+                <input type="email" id="contact-email" data-rule="email" placeholder="Your email" autocomplete="email">
+            </div>
+            <div class="form-group">
+                <label for="contact-message">Message</label>
+                <textarea id="contact-message" data-rule="message" placeholder="Write your message here..."></textarea>
+            </div>
+            <p class="form-message" id="contact-feedback" hidden></p>
+            <button type="submit" class="primary-btn">
+                Send Message
+            </button>
+        </form>
+    </div>
+</section>
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-brand">
+            <div class="logo">
+                <img src="Zopatos.jpeg.png" alt="Zopatos Shoe Store Logo">
+            </div>
+            <p>
+                Step into your style with comfortable,
+                quality, and modern footwear.
+            </p>
+        </div>
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+            <a href="#home">Home</a>
+            <a href="#products">Products</a>
+            <a href="#categories">Categories</a>
+            <a href="#promotions">Promotions</a>
+        </div>
+        <div class="footer-column">
+            <h3>Customer Service</h3>
+            <a href="#about">About Us</a>
+            <a href="#reviews">Reviews</a>
+            <a href="#contact">Contact</a>
+            <a href="#checkout">Order Information</a>
+        </div>
+        <div class="footer-column">
+            <h3>Payment Methods</h3>
+            <p>
+                <i class="fa-solid fa-money-bill"></i>
+                Cash on Delivery
+            </p>
+            <p>
+                <i class="fa-solid fa-mobile-screen"></i>
+                GCash
+            </p>
+            <p>
+                <i class="fa-solid fa-credit-card"></i>
+                Credit / Debit Card
+            </p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>
+            © 2026 Zopatos. All Rights Reserved.
+        </p>
+        <div>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms &amp; Conditions</a>
+        </div>
+    </div>
+</footer>
+<div class="overlay" id="overlay"></div>
+<aside class="cart-drawer" id="cart-drawer" aria-hidden="true">
+    <div class="cart-header">
+        <h3>Your Cart</h3>
+        <button type="button" id="close-cart" aria-label="Close cart">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+    <div class="cart-items" id="cart-items"></div>
+    <div class="cart-footer">
+        <p class="delivery-hint" id="delivery-hint"></p>
+        <form class="promo-form" id="promo-form" novalidate>
+            <input type="text" id="promo-input" placeholder="Promo code">
+            <button type="submit">Apply</button>
+        </form>
+        <small class="promo-msg" id="promo-msg"></small>
+        <div class="summary-row">
+            <span>Subtotal</span>
+            <span id="cart-subtotal">₱0</span>
+        </div>
+        <div class="summary-row" id="discount-row" hidden>
+            <span>
+                Discount (<span id="promo-label"></span>)
+                <button type="button" class="link-btn" id="remove-promo">Remove</button>
+            </span>
+            <span id="cart-discount">-₱0</span>
+        </div>
+        <div class="summary-row">
+            <span>Delivery</span>
+            <span id="cart-delivery">₱0</span>
+        </div>
+        <div class="summary-row total">
+            <span>Total</span>
+            <span id="cart-total">₱0</span>
+        </div>
+        <a href="#checkout" class="primary-btn" id="go-checkout">Proceed to Checkout</a>
+        <button type="button" class="clear-cart" id="clear-cart">Clear cart</button>
+    </div>
+</aside>
+<div class="modal" id="order-modal" hidden>
+    <div class="modal-box">
+        <i class="fa-solid fa-circle-check"></i>
+        <h3>Order Placed!</h3>
+        <p id="order-modal-text"></p>
+        <button type="button" class="primary-btn" id="close-modal">Continue Shopping</button>
+    </div>
+</div>
+<div class="toast-container" id="toast-container"></div>
+<button type="button" class="back-to-top" id="back-to-top" aria-label="Back to top">
+    <i class="fa-solid fa-arrow-up"></i>
+</button>
+<script>
+(function () {
+    var PRODUCTS = [
+        ["RUNNING", "Air Runner X1", "Lightweight running shoes designed for comfortable daily movement.", "6-12", "Black/Red", "Mesh", "Lightweight", 2499, "NEW", "1542291026-7eec264c27ff"],
+        ["RUNNING", "Speed Runner Pro", "Responsive running shoes designed for speed and comfortable movement.", "7-12", "Blue/White", "Mesh", "Breathable", 2999, "", "1552346154-21d32810aba3"],
+        ["RUNNING", "Cloud Sprint 3", "Cushioned daily trainers with a soft landing for longer runs.", "6-12", "White/Sky Blue", "Mesh", "Soft Cushioning", 2799, "NEW", "1491553895911-0055eca6402d"],
+        ["RUNNING", "Velocity Trail", "Grippy trail runners built for dirt paths and wet ground.", "7-12", "Olive/Orange", "Ripstop", "Deep Traction", 3199, "", "1460353581641-37baddab0fa2"],
+        ["RUNNING", "Marathon Lite", "Ultra-light shoes made to stay comfortable over long distances.", "6-12", "Gray/Lime", "Engineered Mesh", "Ultra Light", 3499, "", "1543508282-6319a3e2621f"],
+        ["RUNNING", "Pacer Boost", "Energy-returning midsole for steady, confident pacing.", "6-12", "Black/Gold", "Knit", "Energy Return", 3299, "SALE", "Pacer Boost.jpeg"],
+        ["RUNNING", "Stride Max", "Extra-cushioned runners that protect your joints on hard roads.", "7-13", "Navy/White", "Mesh", "Max Cushion", 3099, "", "Stride Max.jpeg"],
+        ["RUNNING", "Tempo Racer", "Sleek racing flats for fast tempo days and race day.", "6-11", "Red/White", "Synthetic Mesh", "Race Ready", 3799, "NEW", "Tempo Racer.jpeg"],
+        ["RUNNING", "Jogger Flow", "Easy-going jogging shoes for morning walks and light runs.", "6-12", "Pink/White", "Mesh", "Flexible Sole", 1999, "SALE", "1460353581641-37baddab0fa2"],
+        ["RUNNING", "Dash Elite", "High-speed running shoes with a snug, sock-like fit.", "6-12", "Black/Neon Green", "Knit", "Sock-Like Fit", 3899, "", "Dash Elite.jpeg"],
+        ["BASKETBALL", "Court Pro Elite", "High-performance basketball shoes with excellent support and grip.", "7-13", "White/Blue", "Synthetic", "High Grip", 3299, "", "Court Pro Elite.jpeg"],
+        ["BASKETBALL", "Hoop Force", "Durable basketball shoes with responsive cushioning for court performance.", "7-13", "Black/Gold", "Synthetic", "Cushioning", 3599, "", "Hoop Force.jpg"],
+        ["BASKETBALL", "Slam Dunk High", "High-top shoes with strong ankle support for explosive jumps.", "7-13", "Red/Black", "Leather", "Ankle Support", 3999, "NEW", "Slam Dunk High.jpeg"],
+        ["BASKETBALL", "Baseline Pro", "Court shoes built for quick cuts and sudden stops.", "7-13", "White/Navy", "Synthetic", "Lateral Support", 3399, "", "Baseline Pro.jpeg"],
+        ["BASKETBALL", "Rebound Elite", "Stable base and cushioned heel for strong rebounders.", "8-13", "Black/Silver", "Mesh/Synthetic", "Heel Cushion", 3699, "", "Rebound Pro.jpeg"],
+        ["BASKETBALL", "Fastbreak Low", "Low-cut shoes made for guards who play fast.", "7-12", "Blue/Yellow", "Knit", "Low Profile", 3099, "SALE", "Fast Break.jpeg"],
+        ["BASKETBALL", "Jumpshot Flex", "Flexible forefoot for smooth shooting and footwork.", "7-13", "Gray/Orange", "Mesh", "Flexible Forefoot", 2899, "", "1606107557195-0e29a4b5b4aa"],
+        ["BASKETBALL", "Paint Zone", "Heavy-duty shoes for tough play under the basket.", "8-13", "Black/Red", "Leather", "Durable Outsole", 3799, "", "1595950653106-6c9ebd614d3a"],
+        ["BASKETBALL", "Crossover X", "Responsive traction for sharp crossovers and change of pace.", "7-12", "White/Purple", "Synthetic", "Pivot Traction", 3499, "NEW", "Crossover.jpeg"],
+        ["BASKETBALL", "Alley Oop Max", "Maximum bounce cushioning for high-flying plays.", "8-13", "Black/Neon", "Synthetic", "Max Bounce", 4199, "", "Alley.jpeg"],
+        ["CASUAL", "Street Classic", "A classic everyday sneaker that matches different outfits.", "6-12", "White", "Canvas", "Everyday Wear", 2199, "", "Street.jpeg"],
+        ["CASUAL", "Easy Walker", "Soft, comfy walking shoes for all-day wear.", "6-12", "Gray", "Fabric", "All-Day Comfort", 1899, "NEW", "Easy.jpeg"],
+        ["CASUAL", "Weekend Slip-On", "No-lace slip-ons that are quick to wear and easy to love.", "6-12", "Navy", "Canvas", "Slip-On", 1799, "", "Weekend Slip-On.jpg"],
+        ["CASUAL", "Canvas Low", "Timeless low-top canvas sneakers in clean colors.", "6-12", "Black/White", "Canvas", "Low-Top", 1999, "", "Canvas Low.jpg"],
+        ["CASUAL", "Retro Court", "Vintage-inspired court style for a relaxed look.", "6-12", "White/Green", "Synthetic Leather", "Retro Style", 2399, "SALE", "Retro Court.jpg"],
+        ["CASUAL", "Metro Cruiser", "City-ready sneakers with a cushioned insole.", "6-12", "Brown/Cream", "Suede", "Cushioned Insole", 2599, "", "Metro Cruiser.jpg"],
+        ["CASUAL", "Plain White", "Minimal white sneakers that go with everything.", "6-12", "White", "Leather", "Minimal Design", 2299, "", "Plain White.jpg"],
+        ["CASUAL", "Suede Step", "Soft suede upper with a grippy rubber sole.", "6-12", "Tan", "Suede", "Soft Touch", 2699, "NEW", "Suede Step.jpg"],
+        ["CASUAL", "Beach Breeze", "Light and airy shoes for sunny days and travel.", "6-12", "Sand/White", "Woven Fabric", "Breathable", 1699, "", "Beach Breeze.jpg"],
+        ["CASUAL", "Campus Lace", "Comfortable lace-ups made for school and daily errands.", "6-12", "Red/White", "Canvas", "School Ready", 1899, "", "Campus Lace.jpg"],
+        ["TRAINING", "Power Train 2.0", "Stable training shoes made for workouts, gym sessions, and active routines.", "6-12", "Black/White", "Knit", "Stable Sole", 2899, "SALE", "Power Train 2.0.jpg"],
+        ["TRAINING", "Iron Grip", "Flat, grippy soles for solid footing on heavy lifts.", "7-13", "Black/Gray", "Synthetic", "Flat Sole", 3299, "NEW", "Iron Grip.jpg"],
+        ["TRAINING", "Lift Master", "Firm heel support for squats and deadlifts.", "7-13", "Red/Black", "Leather", "Firm Heel", 3599, "", "Lift Master.jpg"],
+        ["TRAINING", "Cross Train Pro", "Do-it-all shoes for circuits, jumps, and sprints.", "6-12", "Blue/Black", "Mesh", "Multi-Sport", 3099, "", "Cross Train Pro.jpg"],
+        ["TRAINING", "HIIT Flex", "Quick-response shoes made for high-intensity intervals.", "6-12", "Neon/Black", "Knit", "Quick Response", 2799, "", "HIIT Flex.jpg"],
+        ["TRAINING", "Gym Core", "Everyday gym trainers with solid all-around support.", "6-12", "Gray/White", "Mesh", "All-Round Support", 2499, "", "Gym Core.jpg"],
+        ["TRAINING", "Agility Edge", "Lateral stability for cone drills and fast footwork.", "6-12", "Orange/Black", "Synthetic Mesh", "Lateral Stability", 2999, "NEW", "Agility Edge.jpg"],
+        ["TRAINING", "Burn Trainer", "Breathable trainers that keep feet cool during long sessions.", "6-12", "Black/Red", "Mesh", "Cooling Mesh", 2599, "SALE", "Burn Trainer.jpg"],
+        ["TRAINING", "Studio Move", "Light, flexible shoes for dance and studio classes.", "5-11", "White/Lilac", "Knit", "Flexible", 2299, "", "Studio Move.jpg"],
+        ["TRAINING", "Kettle Stable", "Wide base for balance during kettlebell and weight work.", "7-13", "Black/Gold", "Synthetic", "Wide Base", 3199, "", "Kettle Stable.jpg"],
+        ["LIFESTYLE", "Urban Lifestyle", "Modern lifestyle sneakers combining comfort and streetwear-inspired design.", "6-12", "Gray/White", "Leather", "Stylish Design", 2699, "", "Urban Lifestyle.jpg"],
+        ["LIFESTYLE", "Daily Flex", "Comfortable everyday footwear for school, travel, and casual activities.", "6-12", "Beige/White", "Fabric", "Flexible", 2399, "", "Daily Flex.jpg"],
+        ["LIFESTYLE", "Skyline Street", "Bold streetwear sneakers with a chunky, standout sole.", "6-12", "White/Blue", "Leather", "Chunky Sole", 3299, "NEW", "Skyline Street.jpg"],
+        ["LIFESTYLE", "Neon Pulse", "Eye-catching colors made for people who love to stand out.", "6-12", "Black/Neon Pink", "Knit", "Bold Colors", 2999, "", "Neon Pulse.jpg"],
+        ["LIFESTYLE", "Metro Chunky", "Platform-style sneakers with extra height and comfort.", "5-11", "Cream/Gray", "Synthetic Leather", "Platform Sole", 3399, "", "Metro Chunky.jpg"],
+        ["LIFESTYLE", "Heritage Leather", "Premium leather sneakers with a timeless look.", "6-12", "Brown/White", "Full-Grain Leather", "Premium Finish", 3799, "", "Heritage Leather.jpg"],
+        ["LIFESTYLE", "Cityline Knit", "Soft knit sneakers for smart-casual outfits.", "6-12", "Charcoal", "Knit", "Sock-Like Comfort", 2799, "SALE", "Cityline Knit.jpg"],
+        ["LIFESTYLE", "Urban Drift", "Relaxed fit shoes designed for long days in the city.", "6-12", "Olive/Cream", "Canvas/Leather", "Relaxed Fit", 2599, "", "Urban Drift.jpg"],
+        ["LIFESTYLE", "Soho Low", "Clean low-profile sneakers for a sharp minimal style.", "6-12", "White/Black", "Leather", "Minimal Design", 2899, "NEW", "Soho Low.jpg"],
+        ["LIFESTYLE", "Midnight Edge", "Dark-toned sneakers with subtle reflective details.", "6-12", "Black/Silver", "Synthetic", "Reflective Detail", 3099, "", "Midnight Edge.jpg"]
+    ];
+    var grid = document.getElementById('product-grid');
+    var html = '';
+    PRODUCTS.forEach(function (p) {
+        var src = p[9].indexOf('.') === -1
+            ? 'https://images.unsplash.com/photo-' + p[9] + '?auto=format&fit=crop&w=800&q=80'
+            : p[9];
+        html += '<article class="product-card">' +
+            '<div class="product-image"><img src="' + src + '" alt="Zopatos ' + p[1] + '" loading="lazy">' +
+            (p[8] ? '<span class="sale-tag">' + p[8] + '</span>' : '') + '</div>' +
+            '<div class="product-info">' +
+            '<p class="category">' + p[0] + '</p>' +
+            '<h3>' + p[1] + '</h3>' +
+            '<p>' + p[2] + '</p>' +
+            '<div class="details">' +
+            '<span><b>Size:</b> ' + p[3] + '</span>' +
+            '<span><b>Color:</b> ' + p[4] + '</span>' +
+            '<span><b>Material:</b> ' + p[5] + '</span>' +
+            '<span><b>Feature:</b> ' + p[6] + '</span></div>' +
+            '<div class="price">₱' + p[7].toLocaleString('en-PH') + '</div>' +
+            '<div class="product-buttons">' +
+            '<a href="#checkout" class="add-btn">Add to Cart</a>' +
+            '<a href="#checkout" class="buy-btn">Buy Now</a></div>' +
+            '</div></article>';
+    });
+    grid.innerHTML = html;
+})();
+</script>
+<script src="script.js" defer></script>
+<script>
+(function () {
+    var items = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+        items.forEach(function (el) { el.classList.add('in'); });
+        return;
+    }
+    var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12 });
+    items.forEach(function (el) { observer.observe(el); });
+})();
+</script>
+</body>
+</html>
