@@ -13,9 +13,9 @@
      5. Local storage .......... cart, user accounts, login session,
                                  "remember me", orders, contact messages
 
-   Event handlers used: click, submit, input, change, blur, keydown,
-                        scroll, error
-   ===================================================================== */
+    Event handlers used: click, submit, input, change, blur, keydown,
+                         scroll, error
+    ===================================================================== */
 
 'use strict';
 
@@ -47,7 +47,7 @@ const MAX_QTY = 10;                // max quantity per cart item
 
 // Used if a product image fails to load (e.g. a missing local file)
 const FALLBACK_IMAGE =
-    'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80';
+    'https://images.unsplash.com/photo-1542291026-7eec26427ff?auto=format&fit=crop&w=800&q=80';
 
 // Shortcut for document.getElementById()
 const $ = (id) => document.getElementById(id);
@@ -92,12 +92,12 @@ function formatPeso(amount) {
 
 // "₱2,499" -> 2499
 function parsePrice(text) {
-    return Number(text.replace(/[^0-9.]/g, ''));
+    return Number(String(text).replace(/[^0-9.]/g, ''));
 }
 
 // Turn "Air Runner X1" into "air-runner-x1" (used for cart item ids)
 function slugify(text) {
-    return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    return String(text).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
 // Prevent special characters from breaking the HTML we build in strings
@@ -176,6 +176,12 @@ const VALIDATORS = {
         return '';
     },
 
+    loginPassword(value) {
+        if (!value) return 'Password is required.';
+        if (value.length < 6) return 'Password must be at least 6 characters.';
+        return '';
+    },
+
     // Must match the sign-up password field
     confirm(value) {
         if (!value) return 'Please confirm your password.';
@@ -197,6 +203,15 @@ const VALIDATORS = {
         return '';
     },
 
+    gcash(value) {
+        if (!value) return 'GCash number is required.';
+        const digits = value.replace(/\D/g, '');
+        if (!/^09\d{9}$/.test(digits)) {
+            return 'Use a valid 11-digit GCash number starting with 09.';
+        }
+        return '';
+    },
+
     address(value) {
         if (!value) return 'Delivery address is required.';
         if (value.length < 10) return 'Please enter your complete address (at least 10 characters).';
@@ -207,20 +222,56 @@ const VALIDATORS = {
         if (!value) return 'Please write a message.';
         if (value.length < 10) return 'Your message must be at least 10 characters.';
         return '';
+    },
+
+    cardNumber(value) {
+        const digits = value.replace(/\D/g, '');
+        if (!digits) return 'Card number is required.';
+        if (digits.length < 13 || digits.length > 19) {
+            return 'Enter a valid card number.';
+        }
+        return '';
+    },
+
+    cardExpiry(value) {
+        if (!value) return 'Expiry date is required.';
+        if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(value)) {
+            return 'Use the format MM/YY.';
+        }
+
+        const [month, year] = value.split('/').map(Number);
+        const expiryDate = new Date(2000 + year, month, 0, 23, 59, 59, 999);
+        const now = new Date();
+
+        if (expiryDate < now) {
+            return 'This card has expired.';
+        }
+        return '';
+    },
+
+    cardCvv(value) {
+        const digits = value.replace(/\D/g, '');
+        if (!digits) return 'CVV is required.';
+        if (digits.length < 3 || digits.length > 4) {
+            return 'Enter a valid CVV.';
+        }
+        return '';
     }
 };
 
 // Show or clear the error message under one input
 function setFieldError(field, errorText) {
     const group = field.closest('.form-group');
-    let errorEl = group.querySelector('.error-msg');
+    let errorEl = group && group.querySelector('.error-msg');
 
     // Create the error element the first time it is needed
-    if (!errorEl) {
+    if (group && !errorEl) {
         errorEl = document.createElement('small');
         errorEl.className = 'error-msg';
         group.appendChild(errorEl);
     }
+
+    if (!group || !errorEl) return;
 
     errorEl.textContent = errorText;
     field.classList.toggle('invalid', errorText !== '');
@@ -229,10 +280,15 @@ function setFieldError(field, errorText) {
 
 // Validate a single field. Returns true when valid.
 function validateField(field) {
+    if (!field || !field.dataset || !field.dataset.rule) return true;
+
     const rule = field.dataset.rule;
+    const validator = VALIDATORS[rule];
+    if (!validator) return true;
+
     // Passwords keep their spaces; everything else is trimmed
     const value = field.type === 'password' ? field.value : field.value.trim();
-    const errorText = VALIDATORS[rule](value);
+    const errorText = validator(value);
     setFieldError(field, errorText);
     return errorText === '';
 }
@@ -822,6 +878,23 @@ function handlePromoSubmit(event) {
    SECTION 6: CHECKOUT AND CONTACT FORMS
    ===================================================================== */
 
+function togglePaymentPanels() {
+    const selected = document.querySelector('input[name="payment"]:checked');
+    const panels = {
+        'Cash on Delivery': $('payment-cod-note'),
+        GCash: $('payment-gcash-fields'),
+        'Credit/Debit Card': $('payment-card-fields')
+    };
+
+    Object.values(panels).forEach((panel) => {
+        if (panel) panel.hidden = true;
+    });
+
+    if (selected && panels[selected.value]) {
+        panels[selected.value].hidden = false;
+    }
+}
+
 // CHECKOUT form submit
 function handleCheckout(event) {
     event.preventDefault();
@@ -838,6 +911,16 @@ function handleCheckout(event) {
         formIsValid = false;
     } else {
         $('payment-error').textContent = '';
+    }
+
+    if (chosenPayment && chosenPayment.value === 'GCash') {
+        if (!validateField($('gcash-number'))) formIsValid = false;
+    }
+
+    if (chosenPayment && chosenPayment.value === 'Credit/Debit Card') {
+        ['card-name', 'card-number', 'card-expiry', 'card-cvv'].forEach((id) => {
+            if (!validateField($(id))) formIsValid = false;
+        });
     }
 
     if (!formIsValid) {
@@ -884,6 +967,7 @@ function handleCheckout(event) {
     form.reset();
     resetFormState(form);
     form.querySelectorAll('.payment-option').forEach((option) => option.classList.remove('selected'));
+    togglePaymentPanels();
     showFormMessage(messageBox, '', '');
     updateAuthUI();   // re-fills the name if the user is logged in
 }
@@ -991,6 +1075,7 @@ function bindEvents() {
                 option.classList.toggle('selected', option.contains(radio) && radio.checked);
             });
             $('payment-error').textContent = '';
+            togglePaymentPanels();
         });
     });
 
@@ -1159,6 +1244,7 @@ function init() {
     applyProductFilters();  // draw the product list + result count
     renderCart(false);      // draw the cart from localStorage
     handleScroll();         // set the initial nav highlight
+    togglePaymentPanels();  // show the correct payment details panel
 }
 
 init();
