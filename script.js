@@ -13,9 +13,9 @@
      5. Local storage .......... cart, user accounts, login session,
                                  "remember me", orders, contact messages
 
-    Event handlers used: click, submit, input, change, blur, keydown,
-                         scroll, error
-    ===================================================================== */
+     Event handlers used: click, submit, input, change, blur, keydown,
+                          scroll, error
+     ===================================================================== */
 
 'use strict';
 
@@ -802,6 +802,8 @@ function renderCart(bumpBadge) {
 function renderOrderSummary(totals) {
     const box = $('order-summary');
 
+    if (!box) return;
+
     if (cart.length === 0) {
         box.innerHTML =
             '<h3>Order Summary</h3>' +
@@ -834,6 +836,76 @@ function renderOrderSummary(totals) {
             <span>${totals.delivery === 0 ? 'FREE' : formatPeso(totals.delivery)}</span>
         </div>
         <div class="summary-row total"><span>Total</span><span>${formatPeso(totals.total)}</span></div>`;
+}
+
+function renderPendingOrders() {
+    const list = $('pending-order-list');
+    if (!list) return;
+
+    const orders = loadData(STORAGE_KEYS.orders, []);
+    if (!Array.isArray(orders) || orders.length === 0) {
+        list.innerHTML = '<div class="empty-cart"><i class="fa-solid fa-box-open"></i>No pending orders yet.</div>';
+        return;
+    }
+
+    list.innerHTML = [...orders].reverse().map((order) => {
+        const itemsMarkup = (order.items || []).map((item) => `
+            <div class="pending-order-item">
+                <span>${escapeHTML(item.name)} × ${item.qty}</span>
+                <small>Size ${escapeHTML(item.size)}</small>
+            </div>
+        `).join('');
+
+        return `
+            <article class="pending-order-card">
+                <div class="pending-order-header">
+                    <div>
+                        <p class="pending-order-id">Order ${escapeHTML(order.id)}</p>
+                        <small>${escapeHTML(order.date)}</small>
+                    </div>
+                    <span class="pending-order-status">Pending</span>
+                </div>
+                <div class="pending-order-items">${itemsMarkup}</div>
+                <div class="pending-order-footer">
+                    <strong>${formatPeso(order.total)}</strong>
+                    <button type="button" class="restore-order-btn" data-order-id="${escapeHTML(order.id)}">Add to cart again</button>
+                </div>
+            </article>
+        `;
+    }).join('');
+}
+
+function restorePendingOrder(orderId) {
+    const orders = loadData(STORAGE_KEYS.orders, []);
+    const order = Array.isArray(orders) ? orders.find((item) => item.id === orderId) : null;
+
+    if (!order || !Array.isArray(order.items) || order.items.length === 0) {
+        showToast('No items were available in that order.', 'error');
+        return;
+    }
+
+    order.items.forEach((item) => {
+        const fallbackId = slugify(item.name) + '-' + item.size;
+        const matchId = item.id || fallbackId;
+        const existingItem = cart.find((cartItem) => cartItem.id === matchId);
+
+        if (existingItem) {
+            existingItem.qty = Math.min(existingItem.qty + Number(item.qty || 1), MAX_QTY);
+        } else {
+            cart.push({
+                id: matchId,
+                name: item.name,
+                size: item.size,
+                price: Number(item.price),
+                image: item.image || FALLBACK_IMAGE,
+                qty: Number(item.qty || 1)
+            });
+        }
+    });
+
+    saveCart();
+    renderCart(true);
+    showToast('Pending order restored to cart.');
 }
 
 /* ----- Open / close the cart drawer ----- */
@@ -944,7 +1016,7 @@ function handleCheckout(event) {
         phone: $('checkout-phone').value.trim(),
         address: $('checkout-address').value.trim(),
         payment: chosenPayment.value,
-        items: cart,
+        items: cart.map((item) => ({ ...item })),
         promo: activePromo,
         total: totals.total
     };
@@ -956,10 +1028,12 @@ function handleCheckout(event) {
     // Show the confirmation pop-up
     $('order-modal-text').textContent =
         'Thank you, ' + customerName + '! Your order ' + order.id + ' (' + formatPeso(totals.total) +
-        ') will be delivered to you. Payment: ' + order.payment + '.';
+        ') has been placed successfully. Payment: ' + order.payment + '.';
     $('order-modal').hidden = false;
+    showToast('Order placed successfully!', 'success');
 
-    // Clear the cart and reset the form
+    // Save the order in the pending list and clear the cart
+    renderPendingOrders();
     cart = [];
     activePromo = '';
     saveCart();
@@ -1184,6 +1258,12 @@ function bindEvents() {
         scrollToSection('checkout');
     });
 
+    $('pending-order-list').addEventListener('click', (event) => {
+        const button = event.target.closest('.restore-order-btn');
+        if (!button) return;
+        restorePendingOrder(button.dataset.orderId);
+    });
+
     /* ---------- Order confirmation pop-up ---------- */
     $('close-modal').addEventListener('click', () => {
         $('order-modal').hidden = true;
@@ -1243,6 +1323,7 @@ function init() {
     updateAuthUI();         // show the right login/logout state
     applyProductFilters();  // draw the product list + result count
     renderCart(false);      // draw the cart from localStorage
+    renderPendingOrders();  // render saved pending orders
     handleScroll();         // set the initial nav highlight
     togglePaymentPanels();  // show the correct payment details panel
 }
