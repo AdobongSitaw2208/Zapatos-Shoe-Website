@@ -12,10 +12,10 @@
                                  delivery fee, order total
      5. Local storage .......... cart, user accounts, login session,
                                  "remember me", orders, contact messages
-
-    Event handlers used: click, submit, input, change, blur, keydown,
-                         scroll, error
-    ===================================================================== */
+ 
+     Event handlers used: click, submit, input, change, blur, keydown,
+                          scroll, error
+     ===================================================================== */
 
 'use strict';
 
@@ -282,6 +282,9 @@ function setFieldError(field, errorText) {
 function validateField(field) {
     if (!field || !field.dataset || !field.dataset.rule) return true;
 
+    const panel = field.closest('.payment-panel');
+    if (panel && panel.hidden) return true;
+
     const rule = field.dataset.rule;
     const validator = VALIDATORS[rule];
     if (!validator) return true;
@@ -299,6 +302,10 @@ function validateForm(form) {
     let firstInvalid = null;
 
     form.querySelectorAll('[data-rule]').forEach((field) => {
+        if (field.closest('.payment-panel') && field.closest('.payment-panel').hidden) {
+            return;
+        }
+
         if (!validateField(field)) {
             allValid = false;
             if (!firstInvalid) firstInvalid = field;
@@ -315,13 +322,17 @@ function enableLiveValidation(form) {
     form.querySelectorAll('[data-rule]').forEach((field) => {
         // blur = the user leaves the field
         field.addEventListener('blur', () => {
-            if (field.value !== '' || field.classList.contains('invalid')) {
-                validateField(field);
+            const panel = field.closest('.payment-panel');
+            if ((panel && panel.hidden) || (field.value === '' && !field.classList.contains('invalid'))) {
+                return;
             }
+            validateField(field);
         });
 
         // input = the user types; only re-check fields already marked
         field.addEventListener('input', () => {
+            const panel = field.closest('.payment-panel');
+            if (panel && panel.hidden) return;
             if (field.classList.contains('invalid') || field.classList.contains('valid')) {
                 validateField(field);
             }
