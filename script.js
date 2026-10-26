@@ -46,8 +46,9 @@ const FREE_DELIVERY_MIN = 5000;    // orders at or above this get free delivery
 const MAX_QTY = 10;                // max quantity per cart item
 
 // Used if a product image fails to load (e.g. a missing local file)
+// FIX: corrected the broken image URL (it was missing a character)
 const FALLBACK_IMAGE =
-    'https://images.unsplash.com/photo-1542291026-7eec26427ff?auto=format&fit=crop&w=800&q=80';
+    'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80';
 
 // Shortcut for document.getElementById()
 const $ = (id) => document.getElementById(id);
@@ -299,6 +300,11 @@ function validateForm(form) {
     let firstInvalid = null;
 
     form.querySelectorAll('[data-rule]').forEach((field) => {
+        // FIX: skip fields inside a hidden panel (e.g. the GCash / card
+        // fields when another payment method is selected). Before, these
+        // hidden empty fields always failed and blocked "Place Order".
+        if (field.closest('[hidden]')) return;
+
         if (!validateField(field)) {
             allValid = false;
             if (!firstInvalid) firstInvalid = field;
@@ -973,7 +979,7 @@ function handleCheckout(event) {
     const form = event.target;
     const messageBox = $('checkout-message');
 
-    // Validate the text fields
+    // Validate the text fields (hidden payment panels are skipped)
     let formIsValid = validateForm(form);
 
     // Validate the payment method radio buttons
@@ -1267,7 +1273,8 @@ function bindEvents() {
     /* ---------- Order confirmation pop-up ---------- */
     $('close-modal').addEventListener('click', () => {
         $('order-modal').hidden = true;
-        scrollToSection('products');
+        // FIX: after the order pop-up, take the user to their pending orders
+        scrollToSection('pending-orders');
     });
     $('order-modal').addEventListener('click', (event) => {
         if (event.target === $('order-modal')) $('order-modal').hidden = true;   // click outside the box
